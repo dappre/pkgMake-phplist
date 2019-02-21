@@ -1,0 +1,25 @@
+diff -ur a/public_html/lists/admin/admins.php b/public_html/lists/admin/admins.php
+--- a/public_html/lists/admin/admins.php	2017-02-13 13:38:10.000000000 +0100
++++ b/public_html/lists/admin/admins.php	2017-03-23 21:25:09.944945918 +0100
+@@ -7,7 +7,7 @@
+     $remember_find = '';
+ }
+ 
+-$external = $require_login && !is_a($GLOBALS['admin_auth'], 'phpListAdminAuthentication');
++$external = $require_login && (!is_a($GLOBALS['admin_auth'], 'phpListAdminAuthentication') && $GLOBALS['manage_admin'] != 1);
+ $start = isset($_GET['start']) ? sprintf('%d', $_GET['start']) : 0;
+ $listid = isset($_GET['id']) ? sprintf('%d', $_GET['id']) : 0;
+ $find = isset($_REQUEST['find']) ? $_REQUEST['find'] : '';
+diff -ur a/public_html/lists/config/config_extended.php b/public_html/lists/config/config_extended.php
+--- a/public_html/lists/config/config_extended.php	2017-02-13 13:38:10.000000000 +0100
++++ b/public_html/lists/config/config_extended.php	2017-03-23 22:09:26.922735898 +0100
+@@ -137,6 +137,9 @@
+ 
+ $require_login = 1;
+ 
++// set this to 1 if you still want to manage admin users despite using an external authentication
++$manage_admin = 1;
++
+ // if you use login, how many lists can be created per administrator
+ define('MAXLIST', 1);
+ 
