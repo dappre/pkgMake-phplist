@@ -51,6 +51,22 @@ library(
 	])
 )
 
+// Load Jenkins shared libraries for rpmMake utils
+def libRpmMake = [
+	remote:			'https://github.com/digital-me/rpmMake.git',
+	branch:			env.BRANCH_NAME,
+	credentialsId:	null,
+]
+
+library(
+	identifier: "libRpmMake@${libRpmMake.branch}",
+	retriever: modernSCM([
+		$class:			'GitSCMSource',
+		remote:			libRpmMake.remote,
+		credentialsId:	libRpmMake.credentialsId
+	])
+)
+
 // Define the remotes and the working and deploy branches
 def remote = 'origin'
 def workingBranch = 'master'
