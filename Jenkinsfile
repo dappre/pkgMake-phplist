@@ -77,14 +77,15 @@ lazyConfig(
 	name: 'pkgmake',
 	inLabels: [ 'centos-6', 'centos-7', /*'ubuntu-16',*/ ],
 	env: 		[
+		VERSION: false,
 		RELEASE: false,
 		DRYRUN: false,
 		TARGET_DIR: 'target',
 		GIT_CRED: 'bot-ci-dgm',
 		DEPLOY_USER: 'root',
-		DEPLOY_HOST_DEV: 'orion1.boxtel',
-		DEPLOY_HOST_PRD: 'almsvctmng001.infra.qiy.nl',
-		DEPLOY_DIR: '/var/mrepo',
+		DEPLOY_HOST_STST: 'orion1.boxtel',
+		DEPLOY_HOST_PROD: 'almsvctmng001.infra.qiy.nl',
+		DEPLOY_BASE_DIR: '/var/mrepo',
 		DEPLOY_CRED: 'bot-ci-dgm-rsa',
 	],
 	noIndex:	"(${releaseBranch}|.+_.+)",	// Avoid automatic indexing for release and private branches
@@ -98,7 +99,9 @@ lazyStage {
 	onlyif = ( lazyConfig['branch'] != releaseBranch ) // Skip when releasing
 	tasks = [
 		pre: {
-			currentBuild.displayName = "#${env.BUILD_NUMBER} ${gitLastTag()}"
+			version = env.VERSION ?: gitLastTag()
+			release = version ==~ /.+-.+/ ? version.split('-')[1] : '1'
+			currentBuild.displayName = "#${env.BUILD_NUMBER} ${version}-${release}"
 		},
 		// TODO: Implement validation
 		run: { echo "Not yet implemented" },
@@ -120,10 +123,17 @@ lazyStage {
 // Build the packages
 lazyStage {
 	name = 'package'
-	onlyif = ( lazyConfig['branch'] != releaseBranch ) // Skip when releasing
 	tasks = [
-		run: { sh("make" ) },
-		in: '*', on: 'docker'
+		run: {
+			version = env.VERSION ?: gitLastTag()
+			release = version ==~ /.+-.+/ ? version.split('-')[1] : '1'
+			currentBuild.displayName = "#${env.BUILD_NUMBER} ${version}-${release}"
+			sh("make RPM_VERSION=${version} RPM_RELEASE=${release} RPM_TARGET_DIR=${env.TARGET_DIR} LOG_FILE=/dev/stdout")
+		},
+		in: '*', on: 'docker',
+		post: {
+			archiveArtifacts(artifacts: "${env.TARGET_DIR}/dists/**", allowEmptyArchive: false)
+		},
 	]
 }
 
@@ -171,13 +181,16 @@ lazyStage {
 
 // Deliver the site on each environment
 lazyStage {
-	name = 'development'
+	name = 'systemtest'
 	onlyif = ( lazyConfig['branch'] == releaseBranch )
-	input = 'Deploy to development?'
+	input = 'Deploy to systemtest?'
 	tasks = [
+		pre: {
+			unarchive(mapping:["${env.TARGET_DIR}/dists" : '.'])
+		},
 		run: {
 			sshagent(credentials: [env.DEPLOY_CRED]) {
-				sshDeploy("${env.TARGET_DIR}/dists", "${env.DEPLOY_USER}@${env.DEPLOY_HOST_DEV}", env.DEPLOY_DIR, 'rsync', false, '-hrlpgolzciu')
+				sshDeploy("${env.TARGET_DIR}/dists", "${env.DEPLOY_USER}@${env.DEPLOY_HOST_STST}", env.DEPLOY_DIR, 'rsync', false, '-hrlpgolzciu')
 			}
 		},
 		// Can not be done in parallel
@@ -189,9 +202,12 @@ lazyStage {
 	onlyif = ( lazyConfig['branch'] == releaseBranch )
 	input = 'Deploy to production?'
 	tasks = [
+		pre: {
+			unarchive(mapping:["${env.TARGET_DIR}/dists" : '.'])
+		},
 		run: {
 			sshagent(credentials: [env.DEPLOY_CRED]) {
-				sshDeploy("${env.TARGET_DIR}/dists", "${env.DEPLOY_USER}@${env.DEPLOY_HOST_PRD}", env.DEPLOY_DIR, 'rsync', false, '-hrlpgolzciu')
+				sshDeploy("${env.TARGET_DIR}/dists", "${env.DEPLOY_USER}@${env.DEPLOY_HOST_PROD}", env.DEPLOY_DIR, 'rsync', false, '-hrlpgolzciu')
 			}
 		},
 		// Can not be done in parallel
