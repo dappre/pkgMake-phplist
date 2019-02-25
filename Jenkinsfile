@@ -107,7 +107,7 @@ lazyStage {
 		run: {
 			version = env.VERSION ?: gitLastTag()
 			version = version - ~/-\d+/
-			sh("make check RPM_VERSION=${version}")
+			sh("make check VERSION=${version}")
 		},
 		in: '*', on: 'docker'
 	]
@@ -125,10 +125,10 @@ lazyStage {
 			sh(
 """
 make \
-RPM_VERSION=${version} \
-RPM_RELEASE=${release} \
-RPM_TARGET_DIR=\$(pwd)/${env.TARGET_DIR} \
-RPM_DISTS_DIR=\$(pwd)/${env.TARGET_DIR}/dists/${env.LAZY_LABEL} \
+VERSION=${version} \
+RELEASE=${release} \
+TARGET_DIR=\$(pwd)/${env.TARGET_DIR} \
+DISTS_DIR=\$(pwd)/${env.TARGET_DIR}/dists/${env.LAZY_LABEL} \
 LOG_FILE=/dev/stdout
 """
 			)
