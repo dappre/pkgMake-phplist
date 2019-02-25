@@ -104,19 +104,11 @@ lazyStage {
 			version = version - ~/-\d+/
 			currentBuild.displayName = "#${env.BUILD_NUMBER} ${version}-${release}"
 		},
-		// TODO: Implement validation
-		run: { echo "Not yet implemented" },
-		in: '*', on: 'docker'
-	]
-}
-
-// Test the project (dry-run)
-lazyStage {
-	name = 'test'
-	onlyif = ( lazyConfig['branch'] != releaseBranch ) // Skip when releasing
-	tasks = [
-		// TODO: Implement testing
-		run: { echo "Not yet implemented" },
+		run: {
+			version = env.VERSION ?: gitLastTag()
+			version = version - ~/-\d+/
+			sh("make check RPM_VERSION=${version}")
+		},
 		in: '*', on: 'docker'
 	]
 }
