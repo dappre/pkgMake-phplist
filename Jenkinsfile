@@ -81,7 +81,7 @@ lazyConfig(
 		RELEASE: false,
 		DRYRUN: false,
 		TARGET_DIR: 'target',
-		GIT_CRED: 'bot-ci-dgm',
+		GIT_CRED: 'bot-ci-dgm-rsa',
 		DEPLOY_USER: 'root',
 		DEPLOY_HOST: 'orion1.boxtel',
 		DEPLOY_DIR: '/var/mrepo',
