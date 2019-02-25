@@ -99,14 +99,25 @@ lazyStage {
 	onlyif = ( lazyConfig['branch'] != releaseBranch ) // Skip when releasing
 	tasks = [
 		pre: {
-			version = env.VERSION ?: gitLastTag()
-			release = version ==~ /.+-.+/ ? version.split('-')[1] : '1'
-			version = version - ~/-\d+/
+			def version = gitLastTag()
+			if (env.VERSION.toString() != 'true' && env.VERSION.toString() != 'false') {
+				version = env.VERSION.toString()
+			}
+			def release = '1'
+			if (version ==~ /.+-.+/) {
+				release = version.split('-')[1]
+				version = version - ~/-.+$/
+			}
 			currentBuild.displayName = "#${env.BUILD_NUMBER} ${version}-${release}"
 		},
 		run: {
-			version = env.VERSION ?: gitLastTag()
-			version = version - ~/-\d+/
+			def version = gitLastTag()
+			if (env.VERSION.toString() != 'true' && env.VERSION.toString() != 'false') {
+				version = env.VERSION.toString()
+			}
+			if (version ==~ /.+-.+/) {
+				version = version - ~/-.+$/
+			}
 			sh("make check VERSION=${version}")
 		},
 		in: '*', on: 'docker'
@@ -119,10 +130,15 @@ lazyStage {
 	onlyif = ( lazyConfig['branch'] != releaseBranch ) // Skip when releasing
 	tasks = [
 		run: {
-			version = env.VERSION ?: gitLastTag()
-			release = version ==~ /.+-.+/ ? version.split('-')[1] : '1'
-			version = version - ~/-\d+/
-			currentBuild.displayName = "#${env.BUILD_NUMBER} ${version}-${release}"
+			def version = gitLastTag()
+			if (env.VERSION.toString() != 'true' && env.VERSION.toString() != 'false') {
+				version = env.VERSION.toString()
+			}
+			def release = '1'
+			if (version ==~ /.+-.+/) {
+				release = version.split('-')[1]
+				version = version - ~/-.+$/
+			}
 			sh(
 """
 make \
@@ -145,9 +161,15 @@ lazyStage {
 	onlyif = ( lazyConfig['branch'] == releaseBranch )
 	tasks = [
 		run: {
-			version = env.VERSION ?: gitLastTag()
-			release = version ==~ /.+-.+/ ? version.split('-')[1] : '1'
-			version = version - ~/-\d+/
+			def version = gitLastTag()
+			if (env.VERSION.toString() != 'true' && env.VERSION.toString() != 'false') {
+				version = env.VERSION.toString()
+			}
+			def release = '1'
+			if (version ==~ /.+-.+/) {
+				release = version.split('-')[1]
+				version = version - ~/-.+$/
+			}
 			currentBuild.displayName = "#${env.BUILD_NUMBER} ${version}-${release}"
 			sh(
 """
