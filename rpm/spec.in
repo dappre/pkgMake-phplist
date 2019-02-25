@@ -1,0 +1,79 @@
+%define name #RPM_NAME#
+%define version #RPM_VERSION#
+%define release #RPM_RELEASE#
+ 
+Summary: newsletter manager
+Name: %{name}
+Version: %{version}
+Release: %{release}%{?dist}
+License: GNU GPL
+URL: http://www.phplist.org
+Group: application/internet
+#Source: https://github.com/phpList/phplist3/archive/v#RPM_VERSION#.tar.gz
+Source: https://downloads.sourceforge.net/project/phplist/phplist/#RPM_VERSION#/#RPM_NAME#-#RPM_VERSION#.tgz
+Patch0: manage_admins_with_external_auth.patch
+Patch1: fck_browser_extend_to_all_files.patch
+Patch2: disable_forgotpassword_option.patch
+Packager: #RPM_PACKAGER#
+BuildArch: noarch
+BuildRoot: %{_tmppath}/%{name}-%{version}-root
+ 
+Requires: php
+Requires: php-mysql
+Requires: php-imap
+ 
+%description
+phplist is the world's most popular open source email campaign manager.
+ 
+ 
+%prep
+%setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+ 
+%build
+# empty build
+ 
+%install
+ 
+%{__rm} -rf %{buildroot}
+%{__mkdir} -p %{buildroot}/%{_datadir}/%{name}
+%{__mkdir} -p %{buildroot}/%{_sysconfdir}/
+%{__mkdir} -p %{buildroot}/%{_localstatedir}/lib/%{name}/{tmp,upload}
+%{__mkdir} -p %{buildroot}/%{_docdir}/%{name}-%{version}
+%{__cp} -r bin %{buildroot}/%{_datadir}/%{name}
+%{__cp} -r scripts %{buildroot}/%{_datadir}/%{name}
+%{__mv} public_html/lists/config %{buildroot}/%{_sysconfdir}/%{name}
+%{__rm} -f %{buildroot}/%{_sysconfdir}/%{name}/.htaccess
+%{__cp} -r public_html/lists %{buildroot}/%{_datadir}/%{name}/www
+ln -s %{_sysconfdir}/%{name} %{buildroot}/%{_datadir}/%{name}/www/config
+ln -s %{_localstatedir}/lib/%{name}/upload %{buildroot}/%{_datadir}/%{name}/www/upload
+sed -i -e "s|/home/website/public_html/lists/|%{_datadir}/%{name}/www/|g" \
+    %{buildroot}/%{_datadir}/%{name}/bin/phplist
+ 
+ 
+ 
+%clean
+rm -rf %{buildroot}
+ 
+%post
+
+%postun
+ 
+ 
+%files
+%defattr(-,root,root)
+%doc CODING.md composer.json CONTRIBUTING.md COPYING INSTALL PEOPLE README.md TESTING.md TODO UPGRADE VERSION doc/README.*
+%dir %{_datadir}/%{name}
+%dir %{_datadir}/%{name}/bin
+%dir %{_datadir}/%{name}/scripts
+%{_datadir}/%{name}/www
+%attr(0755,root,root) %{_datadir}/%{name}/bin/phplist
+%attr(0755,root,root) %{_datadir}/%{name}/scripts/*
+%config(noreplace) %{_sysconfdir}/%{name}/config.php
+%{_sysconfdir}/%{name}/config_extended.php
+ 
+ 
+%changelog
+%include %{_specdir}/changelog

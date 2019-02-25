@@ -1,0 +1,88 @@
+diff -ur a/public_html/lists/admin/plugins/fckphplist/config.php b/public_html/lists/admin/plugins/fckphplist/config.php
+--- a/public_html/lists/admin/plugins/fckphplist/config.php	2017-02-13 13:38:31.000000000 +0100
++++ b/public_html/lists/admin/plugins/fckphplist/config.php	2017-03-23 21:23:17.490419559 +0100
+@@ -334,7 +334,9 @@
+ 
+ //FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=connectors/' + _FileBrowserLanguage + '/connector.' + _FileBrowserExtension ;
+ 
+-FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=' + encodeURIComponent( FCKConfig.BasePath + 'filemanager/connectors/phplist/connector.' + _FileBrowserExtension ) ;
++// Extend browser to all files, not only pictures
++//FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=' + encodeURIComponent( FCKConfig.BasePath + 'filemanager/connectors/phplist/connector.' + _FileBrowserExtension ) ;
++FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=File&Connector=' + encodeURIComponent( FCKConfig.BasePath + 'filemanager/connectors/phplist/connector.' + _FileBrowserExtension ) ;
+ 
+ FCKConfig.ImageBrowserWindowWidth  = FCKConfig.ScreenWidth * 0.7 ;  // 70% ;
+ FCKConfig.ImageBrowserWindowHeight = FCKConfig.ScreenHeight * 0.7 ; // 70% ;
+diff -ur a/public_html/lists/admin/plugins/fckphplist/fckeditor/editor/filemanager/connectors/phplist/config.php b/public_html/lists/admin/plugins/fckphplist/fckeditor/editor/filemanager/connectors/phplist/config.php
+--- a/public_html/lists/admin/plugins/fckphplist/fckeditor/editor/filemanager/connectors/phplist/config.php	2017-02-13 13:38:31.000000000 +0100
++++ b/public_html/lists/admin/plugins/fckphplist/fckeditor/editor/filemanager/connectors/phplist/config.php	2017-03-21 11:31:43.031632979 +0100
+@@ -56,7 +56,7 @@
+ // user files directory. Useful if you are using a virtual directory, symbolic
+ // link or alias. Examples: 'C:\\MySite\\userfiles\\' or '/root/mysite/userfiles/'.
+ // Attention: The above 'UserFilesPath' must point to the same directory.
+-$Config['UserFilesAbsolutePath'] = '' ;
++$Config['UserFilesAbsolutePath'] = '/var/lib/phplist/upload/' ;
+ 
+ // Due to security issues with Apache modules, it is recommended to leave the
+ // following setting enabled.
+@@ -81,11 +81,11 @@
+ // If possible, it is recommended to set more restrictive permissions, like 0755.
+ // Set to 0 to disable this feature.
+ // Note: not needed on Windows-based servers.
+-$Config['ChmodOnUpload'] = 0777 ;
++$Config['ChmodOnUpload'] = 0664 ;
+ 
+ // See comments above.
+ // Used when creating folders that does not exist.
+-$Config['ChmodOnFolderCreate'] = 0777 ;
++$Config['ChmodOnFolderCreate'] = 0775 ;
+ 
+ /*
+ 	Configuration settings for each Resource Type
+@@ -139,32 +139,32 @@
+ 
+ */
+ 
+-$Config['AllowedExtensions']['File']	= array('7z', 'aiff', 'asf', 'avi', 'bmp', 'csv', 'doc', 'fla', 'flv', 'gif', 'gz', 'gzip', 'jpeg', 'jpg', 'mid', 'mov', 'mp3', 'mp4', 'mpc', 'mpeg', 'mpg', 'ods', 'odt', 'pdf', 'png', 'ppt', 'pxd', 'qt', 'ram', 'rar', 'rm', 'rmi', 'rmvb', 'rtf', 'sdc', 'sitd', 'swf', 'sxc', 'sxw', 'tar', 'tgz', 'tif', 'tiff', 'txt', 'vsd', 'wav', 'wma', 'wmv', 'xls', 'xml', 'zip') ;
++$Config['AllowedExtensions']['File']	= array('7z', 'aiff', 'asf', 'avi', 'bmp', 'css', 'csv', 'doc', 'fla', 'flv', 'gif', 'gz', 'gzip', 'htm', 'html', 'jpeg', 'jpg', 'js', 'mid', 'mov', 'mp3', 'mp4', 'mpc', 'mpeg', 'mpg', 'ods', 'odt', 'pdf', 'png', 'ppt', 'pxd', 'qt', 'ram', 'rar', 'rm', 'rmi', 'rmvb', 'rtf', 'sdc', 'sitd', 'swf', 'sxc', 'sxw', 'tar', 'tgz', 'tif', 'tiff', 'txt', 'vsd', 'wav', 'wma', 'wmv', 'xls', 'xml', 'zip') ;
+ $Config['DeniedExtensions']['File']		= array() ;
+-$Config['FileTypesPath']['File']		= $Config['UserFilesPath'] . 'file/' ;
+-$Config['FileTypesAbsolutePath']['File']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'].'file/' ;
++$Config['FileTypesPath']['File']		= $Config['UserFilesPath'] ;
++$Config['FileTypesAbsolutePath']['File']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'] ;
+ $Config['QuickUploadPath']['File']		= $Config['UserFilesPath'] ;
+ $Config['QuickUploadAbsolutePath']['File']= $Config['UserFilesAbsolutePath'] ;
+ 
+ $Config['AllowedExtensions']['Image']	= array('bmp','gif','jpeg','jpg','png') ;
+ $Config['DeniedExtensions']['Image']	= array() ;
+-$Config['FileTypesPath']['Image']		= $Config['UserFilesPath'] . 'image/' ;
+-$Config['FileTypesAbsolutePath']['Image']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'].'image/' ;
+-$Config['QuickUploadPath']['Image']		= $Config['UserFilesPath'] ;
+-$Config['QuickUploadAbsolutePath']['Image']= $Config['UserFilesAbsolutePath'] ;
++$Config['FileTypesPath']['Image']		= $Config['UserFilesPath'];
++$Config['FileTypesAbsolutePath']['Image']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'];
++$Config['QuickUploadPath']['Image']		= $Config['UserFilesPath'] . 'image/' ;
++$Config['QuickUploadAbsolutePath']['Image']= $Config['UserFilesAbsolutePath'] . 'image/' ;
+ 
+ $Config['AllowedExtensions']['Flash']	= array('swf','flv') ;
+ $Config['DeniedExtensions']['Flash']	= array() ;
+-$Config['FileTypesPath']['Flash']		= $Config['UserFilesPath'] . 'flash/' ;
+-$Config['FileTypesAbsolutePath']['Flash']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'].'flash/' ;
+-$Config['QuickUploadPath']['Flash']		= $Config['UserFilesPath'] ;
+-$Config['QuickUploadAbsolutePath']['Flash']= $Config['UserFilesAbsolutePath'] ;
++$Config['FileTypesPath']['Flash']		= $Config['UserFilesPath'] ;
++$Config['FileTypesAbsolutePath']['Flash']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'] ;
++$Config['QuickUploadPath']['Flash']		= $Config['UserFilesPath'] . 'flash/' ;
++$Config['QuickUploadAbsolutePath']['Flash']= $Config['UserFilesAbsolutePath'] . 'flash/' ;
+ 
+ $Config['AllowedExtensions']['Media']	= array('aiff', 'asf', 'avi', 'bmp', 'fla', 'flv', 'gif', 'jpeg', 'jpg', 'mid', 'mov', 'mp3', 'mp4', 'mpc', 'mpeg', 'mpg', 'png', 'qt', 'ram', 'rm', 'rmi', 'rmvb', 'swf', 'tif', 'tiff', 'wav', 'wma', 'wmv') ;
+ $Config['DeniedExtensions']['Media']	= array() ;
+-$Config['FileTypesPath']['Media']		= $Config['UserFilesPath'] . 'media/' ;
+-$Config['FileTypesAbsolutePath']['Media']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'].'media/' ;
+-$Config['QuickUploadPath']['Media']		= $Config['UserFilesPath'] ;
+-$Config['QuickUploadAbsolutePath']['Media']= $Config['UserFilesAbsolutePath'] ;
++$Config['FileTypesPath']['Media']		= $Config['UserFilesPath'] ;
++$Config['FileTypesAbsolutePath']['Media']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'] ;
++$Config['QuickUploadPath']['Media']		= $Config['UserFilesPath'] . 'media/' ;
++$Config['QuickUploadAbsolutePath']['Media']= $Config['UserFilesAbsolutePath'] . 'media/' ;
+ 
+ ?>
