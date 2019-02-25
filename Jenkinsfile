@@ -128,7 +128,7 @@ lazyStage {
 			version = env.VERSION ?: gitLastTag()
 			release = version ==~ /.+-.+/ ? version.split('-')[1] : '1'
 			currentBuild.displayName = "#${env.BUILD_NUMBER} ${version}-${release}"
-			sh("make RPM_VERSION=${version} RPM_RELEASE=${release} RPM_TARGET_DIR=${env.TARGET_DIR} LOG_FILE=/dev/stdout")
+			sh("make RPM_VERSION=${version} RPM_RELEASE=${release} RPM_TARGET_DIR=\$(pwd)/${env.TARGET_DIR} LOG_FILE=/dev/stdout")
 		},
 		in: '*', on: 'docker',
 		post: {
