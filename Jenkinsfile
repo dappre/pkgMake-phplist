@@ -54,7 +54,7 @@ library(
 // Load Jenkins shared libraries for rpmMake utils
 def libRpmMake = [
 	remote:			'https://github.com/digital-me/rpmMake.git',
-	branch:			env.BRANCH_NAME,
+	branch:			'stable',
 	credentialsId:	null,
 ]
 
