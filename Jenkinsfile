@@ -113,9 +113,36 @@ lazyStage {
 	]
 }
 
-// Build the packages
+// Build and test the package(s) inside Docker
+lazyStage {
+	name = 'test'
+	onlyif = ( lazyConfig['branch'] != releaseBranch ) // Skip when releasing
+	tasks = [
+		run: {
+			version = env.VERSION ?: gitLastTag()
+			release = version ==~ /.+-.+/ ? version.split('-')[1] : '1'
+			version = version - ~/-\d+/
+			currentBuild.displayName = "#${env.BUILD_NUMBER} ${version}-${release}"
+			sh(
+"""
+make \
+VERSION=${version} \
+RELEASE=${release} \
+TARGET_DIR=\$(pwd)/${env.TARGET_DIR} \
+DISTS_DIR=\$(pwd)/${env.TARGET_DIR}/dists/${env.LAZY_LABEL} \
+LOG_FILE=/dev/stdout
+"""
+			)
+			sh("sudo yum -y install \$(pwd)/${env.TARGET_DIR}/dists/${env.LAZY_LABEL}/*.rpm")
+		},
+		in: '*', on: 'docker',
+	]
+}
+
+// Build and store the package(s) for deployement
 lazyStage {
 	name = 'package'
+	onlyif = ( lazyConfig['branch'] == releaseBranch )
 	tasks = [
 		run: {
 			version = env.VERSION ?: gitLastTag()
