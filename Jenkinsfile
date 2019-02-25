@@ -83,9 +83,9 @@ lazyConfig(
 		TARGET_DIR: 'target',
 		GIT_CRED: 'bot-ci-dgm',
 		DEPLOY_USER: 'root',
-		DEPLOY_HOST_STST: 'orion1.boxtel',
-		DEPLOY_HOST_PROD: 'almsvctmng001.infra.qiy.nl',
-		DEPLOY_BASE_DIR: '/var/mrepo',
+		DEPLOY_HOST: 'orion1.boxtel',
+		DEPLOY_DIR: '/var/mrepo',
+		DEPLOY_REPO: 'local',
 		DEPLOY_CRED: 'bot-ci-dgm-rsa',
 	],
 	noIndex:	"(${releaseBranch}|.+_.+)",	// Avoid automatic indexing for release and private branches
@@ -101,6 +101,7 @@ lazyStage {
 		pre: {
 			version = env.VERSION ?: gitLastTag()
 			release = version ==~ /.+-.+/ ? version.split('-')[1] : '1'
+			version = version - ~/-\d+/
 			currentBuild.displayName = "#${env.BUILD_NUMBER} ${version}-${release}"
 		},
 		// TODO: Implement validation
@@ -127,8 +128,18 @@ lazyStage {
 		run: {
 			version = env.VERSION ?: gitLastTag()
 			release = version ==~ /.+-.+/ ? version.split('-')[1] : '1'
+			version = version - ~/-\d+/
 			currentBuild.displayName = "#${env.BUILD_NUMBER} ${version}-${release}"
-			sh("make RPM_VERSION=${version} RPM_RELEASE=${release} RPM_TARGET_DIR=\$(pwd)/${env.TARGET_DIR} LOG_FILE=/dev/stdout")
+			sh(
+"""
+make \
+RPM_VERSION=${version} \
+RPM_RELEASE=${release} \
+RPM_TARGET_DIR=\$(pwd)/${env.TARGET_DIR} \
+RPM_DISTS_DIR=\$(pwd)/${env.TARGET_DIR}/dists/${env.LAZY_LABEL} \
+LOG_FILE=/dev/stdout
+"""
+			)
 		},
 		in: '*', on: 'docker',
 		post: {
@@ -186,11 +197,27 @@ lazyStage {
 	input = 'Deploy to systemtest?'
 	tasks = [
 		pre: {
-			unarchive(mapping:["${env.TARGET_DIR}/dists" : '.'])
+			unarchive(mapping:["${env.TARGET_DIR}/" : '.'])
 		},
 		run: {
 			sshagent(credentials: [env.DEPLOY_CRED]) {
-				sshDeploy("${env.TARGET_DIR}/dists", "${env.DEPLOY_USER}@${env.DEPLOY_HOST_STST}", env.DEPLOY_DIR, 'rsync', false, '-hrlpgolzciu')
+				sshDeploy(
+					"${env.TARGET_DIR}/dists/centos-6",
+					"${env.DEPLOY_USER}@${env.DEPLOY_HOST}",
+					"${env.DEPLOY_DIR}/centos6-x86_64/${env.DEPLOY_REPO}-testing",
+					'scp',
+					false
+				)
+				sshDeploy(
+					"${env.TARGET_DIR}/dists/centos-7",
+					"${env.DEPLOY_USER}@${env.DEPLOY_HOST}",
+					"${env.DEPLOY_DIR}/centos7-x86_64/${env.DEPLOY_REPO}-testing",
+					'scp',
+					false
+				)
+				sh("ssh ${env.DEPLOY_USER}@${env.DEPLOY_HOST}"
+					+ " mrepo -vvv -g --repo=${env.DEPLOY_REPO}-testing centos6-x86_64 centos7-x86_64"
+				)
 			}
 		},
 		// Can not be done in parallel
@@ -203,11 +230,25 @@ lazyStage {
 	input = 'Deploy to production?'
 	tasks = [
 		pre: {
-			unarchive(mapping:["${env.TARGET_DIR}/dists" : '.'])
+			unarchive(mapping:["${env.TARGET_DIR}/" : '.'])
 		},
 		run: {
 			sshagent(credentials: [env.DEPLOY_CRED]) {
-				sshDeploy("${env.TARGET_DIR}/dists", "${env.DEPLOY_USER}@${env.DEPLOY_HOST_PROD}", env.DEPLOY_DIR, 'rsync', false, '-hrlpgolzciu')
+				sh("ls -1 ${env.TARGET_DIR}/dists/centos-6/*.rpm | ssh ${env.DEPLOY_USER}@${env.DEPLOY_HOST}"
+					+ " while read PKG; do"
+					+ "  mv ${env.DEPLOY_DIR}/centos6-x86_64/${env.DEPLOY_REPO}-testing/\${PKG}"
+					+ "   ${env.DEPLOY_DIR}/centos6-x86_64/${env.DEPLOY_REPO}/\${PKG};"
+					+ " done"
+				)
+				sh("ls -1 ${env.TARGET_DIR}/dists/centos-7/*.rpm | ssh ${env.DEPLOY_USER}@${env.DEPLOY_HOST}"
+					+ " while read PKG; do"
+					+ "  mv ${env.DEPLOY_DIR}/centos7-x86_64/${env.DEPLOY_REPO}-testing/\${PKG}"
+					+ "   ${env.DEPLOY_DIR}/centos7-x86_64/${env.DEPLOY_REPO}/\${PKG};"
+					+ " done"
+				)
+				sh("ssh ${env.DEPLOY_USER}@${env.DEPLOY_HOST}"
+					+ " mrepo -vv -g --repo=${env.DEPLOY_REPO}-testing,${env.DEPLOY_REPO} centos6-x86_64 centos7-x86_64"
+				)
 			}
 		},
 		// Can not be done in parallel
