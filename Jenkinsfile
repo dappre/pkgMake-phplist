@@ -257,7 +257,7 @@ lazyStage {
 					false
 				)
 				sh("ssh ${env.DEPLOY_USER}@${env.DEPLOY_HOST}"
-					+ " mrepo -vvv -g --repo=${env.DEPLOY_REPO}-testing centos6-x86_64 centos7-x86_64"
+					+ " 'mrepo -vvv -g --repo=${env.DEPLOY_REPO}-testing centos6-x86_64 centos7-x86_64'"
 				)
 			}
 		},
@@ -276,19 +276,19 @@ lazyStage {
 		run: {
 			sshagent(credentials: [env.DEPLOY_CRED]) {
 				sh("ls -1 ${env.TARGET_DIR}/dists/centos-6/*.rpm | ssh ${env.DEPLOY_USER}@${env.DEPLOY_HOST}"
-					+ " while read PKG; do"
-					+ "  mv ${env.DEPLOY_DIR}/centos6-x86_64/${env.DEPLOY_REPO}-testing/\${PKG}"
-					+ "   ${env.DEPLOY_DIR}/centos6-x86_64/${env.DEPLOY_REPO}/\${PKG};"
-					+ " done"
+					+ " 'while read PKG; do"
+					+ "  mv ${env.DEPLOY_DIR}/centos6-x86_64/${env.DEPLOY_REPO}-testing/\${PKG##*/}"
+					+ "   ${env.DEPLOY_DIR}/centos6-x86_64/${env.DEPLOY_REPO}/\${PKG##*/};"
+					+ " done'"
 				)
 				sh("ls -1 ${env.TARGET_DIR}/dists/centos-7/*.rpm | ssh ${env.DEPLOY_USER}@${env.DEPLOY_HOST}"
-					+ " while read PKG; do"
-					+ "  mv ${env.DEPLOY_DIR}/centos7-x86_64/${env.DEPLOY_REPO}-testing/\${PKG}"
-					+ "   ${env.DEPLOY_DIR}/centos7-x86_64/${env.DEPLOY_REPO}/\${PKG};"
-					+ " done"
+					+ " 'while read PKG; do"
+					+ "  mv ${env.DEPLOY_DIR}/centos7-x86_64/${env.DEPLOY_REPO}-testing/\${PKG##*/}"
+					+ "   ${env.DEPLOY_DIR}/centos7-x86_64/${env.DEPLOY_REPO}/\${PKG##*/};"
+					+ " done\'"
 				)
 				sh("ssh ${env.DEPLOY_USER}@${env.DEPLOY_HOST}"
-					+ " mrepo -vv -g --repo=${env.DEPLOY_REPO}-testing,${env.DEPLOY_REPO} centos6-x86_64 centos7-x86_64"
+					+ " 'mrepo -vv -g --repo=${env.DEPLOY_REPO}-testing,${env.DEPLOY_REPO} centos6-x86_64 centos7-x86_64'"
 				)
 			}
 		},
