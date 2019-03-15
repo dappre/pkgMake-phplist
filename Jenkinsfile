@@ -173,11 +173,12 @@ lazyStage {
 			currentBuild.displayName = "#${env.BUILD_NUMBER} ${version}-${release}"
 			sh(
 """
+DIST=\"\${LAZY_LABEL%%-*}\${LAZY_LABEL##*-}-\$(arch)\"
 make \
 VERSION=${version} \
 RELEASE=${release} \
 TARGET_DIR=\$(pwd)/${env.TARGET_DIR} \
-DISTS_DIR=\$(pwd)/${env.TARGET_DIR}/dists/${env.LAZY_LABEL} \
+DISTS_DIR=\$(pwd)/${env.TARGET_DIR}/dists/\${DIST} \
 LOG_FILE=/dev/stdout
 """
 			)
@@ -240,24 +241,13 @@ lazyStage {
 		pre: {
 			unarchive(mapping:["${env.TARGET_DIR}/" : '.'])
 		},
-		run: {
+		run: 'repo_sync.sh', // Only to get the script copied from the lib
+		post: {
 			sshagent(credentials: [env.DEPLOY_CRED]) {
-				sshDeploy(
-					"${env.TARGET_DIR}/dists/centos-6",
-					"${env.DEPLOY_USER}@${env.DEPLOY_HOST}",
-					"${env.DEPLOY_DIR}/centos6-x86_64/${env.DEPLOY_REPO}-testing",
-					'scp',
-					false
-				)
-				sshDeploy(
-					"${env.TARGET_DIR}/dists/centos-7",
-					"${env.DEPLOY_USER}@${env.DEPLOY_HOST}",
-					"${env.DEPLOY_DIR}/centos7-x86_64/${env.DEPLOY_REPO}-testing",
-					'scp',
-					false
-				)
-				sh("ssh ${env.DEPLOY_USER}@${env.DEPLOY_HOST}"
-					+ " mrepo -vvv -g --repo=${env.DEPLOY_REPO}-testing centos6-x86_64 centos7-x86_64"
+				sh("./lazyDir/systemtest/repo_sync.sh"
+					+ " -s '${env.TARGET_DIR}/dists'"
+					+ " '${env.DEPLOY_USER}@${env.DEPLOY_HOST}:${env.DEPLOY_DIR}'"
+					+ " '${env.DEPLOY_REPO}-testing'"
 				)
 			}
 		},
@@ -273,22 +263,14 @@ lazyStage {
 		pre: {
 			unarchive(mapping:["${env.TARGET_DIR}/" : '.'])
 		},
-		run: {
+		run: 'repo_sync.sh', // Only to get the script copied from the lib
+		post: {
 			sshagent(credentials: [env.DEPLOY_CRED]) {
-				sh("ls -1 ${env.TARGET_DIR}/dists/centos-6/*.rpm | ssh ${env.DEPLOY_USER}@${env.DEPLOY_HOST}"
-					+ " while read PKG; do"
-					+ "  mv ${env.DEPLOY_DIR}/centos6-x86_64/${env.DEPLOY_REPO}-testing/\${PKG}"
-					+ "   ${env.DEPLOY_DIR}/centos6-x86_64/${env.DEPLOY_REPO}/\${PKG};"
-					+ " done"
-				)
-				sh("ls -1 ${env.TARGET_DIR}/dists/centos-7/*.rpm | ssh ${env.DEPLOY_USER}@${env.DEPLOY_HOST}"
-					+ " while read PKG; do"
-					+ "  mv ${env.DEPLOY_DIR}/centos7-x86_64/${env.DEPLOY_REPO}-testing/\${PKG}"
-					+ "   ${env.DEPLOY_DIR}/centos7-x86_64/${env.DEPLOY_REPO}/\${PKG};"
-					+ " done"
-				)
-				sh("ssh ${env.DEPLOY_USER}@${env.DEPLOY_HOST}"
-					+ " mrepo -vv -g --repo=${env.DEPLOY_REPO}-testing,${env.DEPLOY_REPO} centos6-x86_64 centos7-x86_64"
+				sh("./lazyDir/production/repo_sync.sh"
+					+ " -s '${env.TARGET_DIR}/dists'"
+					+ " -o '${env.DEPLOY_REPO}-testing'"
+					+ " '${env.DEPLOY_USER}@${env.DEPLOY_HOST}:${env.DEPLOY_DIR}'"
+					+ " '${env.DEPLOY_REPO}'"
 				)
 			}
 		},

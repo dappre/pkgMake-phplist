@@ -13,9 +13,7 @@ diff -ur a/public_html/lists/admin/admins.php b/public_html/lists/admin/admins.p
 diff -ur a/public_html/lists/config/config_extended.php b/public_html/lists/config/config_extended.php
 --- a/public_html/lists/config/config_extended.php	2017-02-13 13:38:10.000000000 +0100
 +++ b/public_html/lists/config/config_extended.php	2017-03-23 22:09:26.922735898 +0100
-@@ -137,6 +137,9 @@
- 
- $require_login = 1;
+@@ -137,4 +137,7 @@
  
 +// set this to 1 if you still want to manage admin users despite using an external authentication
 +$manage_admin = 1;

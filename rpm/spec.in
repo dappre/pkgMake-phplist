@@ -69,10 +69,9 @@ rm -rf %{buildroot}
 %dir %{_datadir}/%{name}/bin
 %dir %{_datadir}/%{name}/scripts
 %{_datadir}/%{name}/www
-%attr(0755,root,root) %{_datadir}/%{name}/bin/phplist
+%attr(0755,root,root) %{_datadir}/%{name}/bin/*
 %attr(0755,root,root) %{_datadir}/%{name}/scripts/*
-%config(noreplace) %{_sysconfdir}/%{name}/config.php
-%{_sysconfdir}/%{name}/config_extended.php
+%config(noreplace) %{_sysconfdir}/%{name}/*
  
  
 %changelog
