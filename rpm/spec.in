@@ -31,28 +31,29 @@ phplist is the world's most popular open source email campaign manager.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
- 
+%if 0%{?el6}
+%{__rm} -rf public_html/lists/admin/plugins/SegmentPlugin*
+%endif
+
 %build
 # empty build
  
 %install
  
 %{__rm} -rf %{buildroot}
-%{__mkdir} -p %{buildroot}/%{_datadir}/%{name}
-%{__mkdir} -p %{buildroot}/%{_sysconfdir}/
-%{__mkdir} -p %{buildroot}/%{_localstatedir}/lib/%{name}/{tmp,upload}
-%{__mkdir} -p %{buildroot}/%{_docdir}/%{name}-%{version}
-%{__cp} -r bin %{buildroot}/%{_datadir}/%{name}
-%{__cp} -r scripts %{buildroot}/%{_datadir}/%{name}
-%{__mv} public_html/lists/config %{buildroot}/%{_sysconfdir}/%{name}
-%{__rm} -f %{buildroot}/%{_sysconfdir}/%{name}/.htaccess
-%{__cp} -r public_html/lists %{buildroot}/%{_datadir}/%{name}/www
-ln -s %{_sysconfdir}/%{name} %{buildroot}/%{_datadir}/%{name}/www/config
-ln -s %{_localstatedir}/lib/%{name}/upload %{buildroot}/%{_datadir}/%{name}/www/upload
+%{__mkdir} -p %{buildroot}%{_datadir}/%{name}
+%{__mkdir} -p %{buildroot}%{_sysconfdir}/
+%{__mkdir} -p %{buildroot}%{_localstatedir}/lib/%{name}/{tmp,upload}
+%{__mkdir} -p %{buildroot}%{_docdir}/%{name}-%{version}
+%{__cp} -r bin %{buildroot}%{_datadir}/%{name}
+%{__cp} -r scripts %{buildroot}%{_datadir}/%{name}
+%{__mv} public_html/lists/config %{buildroot}%{_sysconfdir}/%{name}
+%{__rm} -f %{buildroot}%{_sysconfdir}/%{name}/.htaccess
+%{__cp} -r public_html/lists %{buildroot}%{_datadir}/%{name}/www
+ln -s %{_sysconfdir}/%{name} %{buildroot}%{_datadir}/%{name}/www/config
+ln -s %{_localstatedir}/lib/%{name}/upload %{buildroot}%{_datadir}/%{name}/www/upload
 sed -i -e "s|/home/website/public_html/lists/|%{_datadir}/%{name}/www/|g" \
-    %{buildroot}/%{_datadir}/%{name}/bin/phplist
- 
- 
+    %{buildroot}%{_datadir}/%{name}/bin/phplist
  
 %clean
 rm -rf %{buildroot}
