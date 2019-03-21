@@ -31,6 +31,9 @@ phplist is the world's most popular open source email campaign manager.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%if 0%{?el6}
+%{__rm} -rf public_html/lists/admin/plugins/SegmentPlugin*
+%endif
 
 %build
 # empty build
