@@ -234,7 +234,7 @@ lazyStage {
 
 // Deliver the site on each environment
 lazyStage {
-	name = 'systemtest'
+	name = 'testing'
 	onlyif = ( lazyConfig['branch'] == releaseBranch )
 	input = 'Deploy to systemtest?'
 	tasks = [
@@ -256,7 +256,7 @@ lazyStage {
 }
 
 lazyStage {
-	name = 'production'
+	name = 'stable'
 	onlyif = ( lazyConfig['branch'] == releaseBranch )
 	input = 'Deploy to production?'
 	tasks = [
