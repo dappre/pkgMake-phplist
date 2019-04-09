@@ -244,7 +244,7 @@ lazyStage {
 		run: 'repo_sync.sh', // Only to get the script copied from the lib
 		post: {
 			sshagent(credentials: [env.DEPLOY_CRED]) {
-				sh("./lazyDir/systemtest/repo_sync.sh"
+				sh("./lazyDir/testing/repo_sync.sh"
 					+ " -s '${env.TARGET_DIR}/dists'"
 					+ " '${env.DEPLOY_USER}@${env.DEPLOY_HOST}:${env.DEPLOY_DIR}'"
 					+ " '${env.DEPLOY_REPO}-testing'"
@@ -266,7 +266,7 @@ lazyStage {
 		run: 'repo_sync.sh', // Only to get the script copied from the lib
 		post: {
 			sshagent(credentials: [env.DEPLOY_CRED]) {
-				sh("./lazyDir/production/repo_sync.sh"
+				sh("./lazyDir/stable/repo_sync.sh"
 					+ " -s '${env.TARGET_DIR}/dists'"
 					+ " -o '${env.DEPLOY_REPO}-testing'"
 					+ " '${env.DEPLOY_USER}@${env.DEPLOY_HOST}:${env.DEPLOY_DIR}'"
