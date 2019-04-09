@@ -1,3 +1,6 @@
+* Tue Apr  9 2019 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.2-3
+- Upgrade SegmentPlugin to 2.2.7 on el7 to fix syntax error
+
 * Thu Mar 21 2019 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.2-2
 - Remove SegmentPlugin on el6 as it requires PHP > 5.3
 

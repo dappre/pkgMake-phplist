@@ -1,0 +1,28 @@
+diff -ur a/public_html/lists/admin/plugins/SegmentPlugin/version.txt b/public_html/lists/admin/plugins/SegmentPlugin/version.txt
+--- a/public_html/lists/admin/plugins/SegmentPlugin/version.txt	2019-04-09 13:39:55.221670375 +0200
++++ b/public_html/lists/admin/plugins/SegmentPlugin/version.txt	2019-04-09 13:40:27.425860790 +0200
+@@ -1 +1 @@
+-2.2.6+20180328
+\ No newline at end of file
++2.2.7+20180517
+diff -ur a/public_html/lists/admin/plugins/SegmentPlugin.php b/public_html/lists/admin/plugins/SegmentPlugin.php
+--- a/public_html/lists/admin/plugins/SegmentPlugin.php	2019-04-09 13:36:26.708000702 +0200
++++ b/public_html/lists/admin/plugins/SegmentPlugin.php	2019-04-09 13:36:34.432071720 +0200
+@@ -33,7 +33,7 @@
+     const VERSION_FILE = 'version.txt';
+     const GUIDANCE = 'https://resources.phplist.com/plugin/segment#add_segment_conditions';
+ 
+-    private $error_level = E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_STRICT;
++    private $error_level;
+     private $selectedSubscribers = null;
+     private $dao;
+ 
+@@ -188,6 +188,8 @@
+               'category' => 'Segmentation',
+             ),
+         );
++        $this->error_level = E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_STRICT;
++
+         parent::__construct();
+         $this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
+             ? file_get_contents($f)
