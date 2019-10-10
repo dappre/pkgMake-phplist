@@ -1,26 +1,53 @@
-* Tue Apr  9 2019 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.2-3
+* Mon Feb 11 2019 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.9-1
+- new placeholder for inserting link to vCard
+- More info: https://www.phplist.org/newslist/phplist-3-3-9-release-notes/
+
+* Fri Jan 11 2019 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.8-1
+- Re-designed Dashboard
+- More info: https://www.phplist.org/newslist/phplist-3-3-8-release-notes/
+
+* Fri Dec 14 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.7-1
+- Automatic Updater
+- More info: https://www.phplist.org/newslist/3-3-7-release-notes/
+
+* Sun Nov 11 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.6-1
+- Public categorisation of lists
+- More info: https://www.phplist.org/newslist/phplist-3-3-6-release-notes/
+
+* Thu Oct 11 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.5-1
+- New statistics: Bounces per Campaign
+- More info: https://www.phplist.org/newslist/phplist-3-3-5-release-notes/
+
+* Tue Sep 11 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.4-1
+- More info: https://www.phplist.org/newslist/phplist-3-3-4-release-notes/
+
+* Wed May 16 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.3-1
+- easier for phpList administrators to be compliant with the GDPR
+- More info: https://www.phplist.org/newslist/phplist-3-3-3-release-notes/
+
+* Thu May  3 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.2-3
 - Upgrade SegmentPlugin to 2.2.7 on el7 to fix syntax error
 
-* Thu Mar 21 2019 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.2-2
+* Thu May  3 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.2-2
 - Remove SegmentPlugin on el6 as it requires PHP > 5.3
 
-* Fri Mar 15 2019 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.2-1
+* Thu May  3 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.2-1
 - New interface and CKEditor enabled by default, 4 plugins, 20 fixes, and 339 code commits
 - Add fix to support PHP 5.3 dropped since 3.3.1
 - More info: https://www.phplist.org/newslist/phplist-3-3-2-release-notes/
 
-* Mon Feb 25 2019 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.1-3
+* Mon Feb 13 2017 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.1-3
 - Improve spec and patches for upcoming releases
 
-* Thu Mar 23 2017 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.1-2
+* Mon Feb 13 2017 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.1-2
 - Fix multiple vulnerabilities
 - Including 2 SQL injections: https://www.curesec.com/blog/article/blog/phplist-326-SQL-Injection-193.html)
 - More info: https://www.phplist.org/newslist/phplist-3-3-1-released-first-update-for-phplist-3-3/
 
-* Tue Mar 21 2017 Digital-Me Infra Team <infra@digital-me.nl> - 3.2.7-2
+* Wed Jan  4 2017 Digital-Me Infra Team <infra@digital-me.nl> - 3.2.7-2
 - Fix multiple vulnerabilities in PHPMailer (CVE-2016-10045, CVE-2016-10033)
 - More info: https://www.phplist.org/newslist/phplist-3-2-7-released-phpmailer-updated/
 
-* Tue Mar 21 2017 Digital-Me Infra Team <infra@digital-me.nl> - 3.2.6-2
+* Tue Nov  8 2016 Digital-Me Infra Team <infra@digital-me.nl> - 3.2.6-2
 - Fix XSS vulnerability (#18250)
 - More info: https://www.phplist.org/newslist/phplist-3-2-6-release-notes/
