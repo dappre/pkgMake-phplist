@@ -47,7 +47,6 @@ phplist is the world's most popular open source email campaign manager.
 %{__mkdir} -p %{buildroot}%{_localstatedir}/lib/%{name}/{tmp,upload}
 %{__mkdir} -p %{buildroot}%{_docdir}/%{name}-%{version}
 %{__cp} -r bin %{buildroot}%{_datadir}/%{name}
-%{__cp} -r scripts %{buildroot}%{_datadir}/%{name}
 %{__mv} public_html/lists/config %{buildroot}%{_sysconfdir}/%{name}
 %{__rm} -f %{buildroot}%{_sysconfdir}/%{name}/.htaccess
 %{__cp} -r public_html/lists %{buildroot}%{_datadir}/%{name}/www
@@ -66,13 +65,11 @@ rm -rf %{buildroot}
  
 %files
 %defattr(-,root,root)
-%doc CODING.md composer.json CONTRIBUTING.md COPYING INSTALL PEOPLE README.md TESTING.md TODO UPGRADE VERSION doc/README.*
+%doc CONTRIBUTING.md COPYING INSTALL PEOPLE README.md TODO UPGRADE VERSION doc/README.*
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/bin
-%dir %{_datadir}/%{name}/scripts
 %{_datadir}/%{name}/www
 %attr(0755,root,root) %{_datadir}/%{name}/bin/*
-%attr(0755,root,root) %{_datadir}/%{name}/scripts/*
 %config(noreplace) %{_sysconfdir}/%{name}/*
  
  
