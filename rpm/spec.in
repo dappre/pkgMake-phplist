@@ -12,8 +12,7 @@ Group: application/internet
 #Source: https://github.com/phpList/phplist3/archive/v#RPM_VERSION#.tar.gz
 Source: https://downloads.sourceforge.net/project/phplist/phplist/#RPM_VERSION#/#RPM_NAME#-#RPM_VERSION#.tgz
 Patch0: manage_admins_with_external_auth.patch
-Patch1: fck_browser_extend_to_all_files.patch
-Patch2: disable_forgotpassword_option.patch
+Patch1: disable_forgotpassword_option.patch
 Packager: #RPM_PACKAGER#
 BuildArch: noarch
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
@@ -30,7 +29,6 @@ phplist is the world's most popular open source email campaign manager.
 %setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 %if 0%{?el6}
 %{__rm} -rf public_html/lists/admin/plugins/SegmentPlugin*
 %else%
