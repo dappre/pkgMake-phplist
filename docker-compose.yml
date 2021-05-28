@@ -1,9 +1,9 @@
 version: '3'
 services:
-  default:
+  centos7:
     build: 
       context: rpmMake/resources/lazyDir
-      dockerfile: centos-7.Dockerfile
+      dockerfile: centos7.Dockerfile
       args:
         uid: "${_UID:-1000}"
         gid: "${_GID:-1000}"

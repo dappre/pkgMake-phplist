@@ -1,53 +1,94 @@
-* Mon Feb 11 2019 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.9-1
+* Wed Dec 11 2019 Infra Team <infra@dolden.net> - 3.4.9-1
+- 3 fixes, 3 usability improvements and functionality enhancements and updated dependencies for phpList4 modules
+- More info: https://www.phplist.org/newslist/phplist-3-4-9-release-notes/
+
+* Mon Nov 11 2019 Infra Team <infra@dolden.net> - 3.4.8-1
+- minor release including one important change
+- More info: https://www.phplist.org/newslist/phplist-3-4-8-release-notes/
+
+* Fri Oct 11 2019 Infra Team <infra@dolden.net> - 3.4.7-1
+- improvements to CSV import, table rendering, and configuration menus
+- More info: https://www.phplist.org/newslist/phplist-3-4-7-release-notes/
+
+* Wed Sep 11 2019 Infra Team <infra@dolden.net> - 3.4.6-1
+- subtle usability and security improvements
+- More info: https://www.phplist.org/newslist/phplist-3-4-6-release-notes/
+
+* Sun Aug 11 2019 Infra Team <infra@dolden.net> - 3.4.5-1
+- more data available for spreadsheet export, minor usability improvements and functionality, and 4 fixes
+- More info: https://www.phplist.org/newslist/phplist-3-4-5-release-notes/
+
+* Thu Jul 11 2019 Infra Team <infra@dolden.net> - 3.4.4-1
+- new option to search lists by name, plus fixes, usability, and functional improvements
+- More info: https://www.phplist.org/newslist/phplist-3-4-4-release-notes/
+
+* Tue Jun 18 2019 Infra Team <infra@dolden.net> - 3.4.3-1
+- security fixes
+- More info: https://www.phplist.org/newslist/phplist-3-4-3-release-notes/
+
+* Sat May 11 2019 Infra Team <infra@dolden.net> - 3.4.2-1
+- seven improvements to usability and functionality, and seven fixes
+- More info: https://www.phplist.org/newslist/phplist-3-4-2-release-notes/
+
+* Mon Apr 15 2019 Infra Team <infra@dolden.net> - 3.4.1-1
+- incorporates changes both to the REST API and the Automatic Updater
+- More info: https://www.phplist.org/newslist/phplist-3-4-1-release-notes/
+
+* Fri Mar 15 2019 Infra Team <infra@dolden.net> - 3.4.0-1
+- significant update that incorporates many changes
+- jQuery security updates, new campaign template, new REST API powered by phpList 4
+- More info: https://www.phplist.org/newslist/phplist-3-4-0-release-notes/
+
+* Mon Feb 11 2019 Infra Team <infra@dolden.net> - 3.3.9-1
 - new placeholder for inserting link to vCard
 - More info: https://www.phplist.org/newslist/phplist-3-3-9-release-notes/
 
-* Fri Jan 11 2019 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.8-1
+* Fri Jan 11 2019 Infra Team <infra@dolden.net> - 3.3.8-1
 - Re-designed Dashboard
 - More info: https://www.phplist.org/newslist/phplist-3-3-8-release-notes/
 
-* Fri Dec 14 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.7-1
+* Fri Dec 14 2018 Infra Team <infra@dolden.net> - 3.3.7-1
 - Automatic Updater
 - More info: https://www.phplist.org/newslist/3-3-7-release-notes/
 
-* Sun Nov 11 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.6-1
+* Sun Nov 11 2018 Infra Team <infra@dolden.net> - 3.3.6-1
 - Public categorisation of lists
 - More info: https://www.phplist.org/newslist/phplist-3-3-6-release-notes/
 
-* Thu Oct 11 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.5-1
+* Thu Oct 11 2018 Infra Team <infra@dolden.net> - 3.3.5-1
 - New statistics: Bounces per Campaign
 - More info: https://www.phplist.org/newslist/phplist-3-3-5-release-notes/
 
-* Tue Sep 11 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.4-1
+* Tue Sep 11 2018 Infra Team <infra@dolden.net> - 3.3.4-1
 - More info: https://www.phplist.org/newslist/phplist-3-3-4-release-notes/
 
-* Wed May 16 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.3-1
+* Wed May 16 2018 Infra Team <infra@dolden.net> - 3.3.3-1
 - easier for phpList administrators to be compliant with the GDPR
 - More info: https://www.phplist.org/newslist/phplist-3-3-3-release-notes/
 
-* Thu May  3 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.2-3
+* Thu May  3 2018 Infra Team <infra@dolden.net> - 3.3.2-3
 - Upgrade SegmentPlugin to 2.2.7 on el7 to fix syntax error
 
-* Thu May  3 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.2-2
+* Thu May  3 2018 Infra Team <infra@dolden.net> - 3.3.2-2
 - Remove SegmentPlugin on el6 as it requires PHP > 5.3
 
-* Thu May  3 2018 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.2-1
+* Thu May  3 2018 Infra Team <infra@dolden.net> - 3.3.2-1
 - New interface and CKEditor enabled by default, 4 plugins, 20 fixes, and 339 code commits
 - Add fix to support PHP 5.3 dropped since 3.3.1
 - More info: https://www.phplist.org/newslist/phplist-3-3-2-release-notes/
 
-* Mon Feb 13 2017 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.1-3
+* Mon Feb 13 2017 Infra Team <infra@dolden.net> - 3.3.1-3
 - Improve spec and patches for upcoming releases
 
-* Mon Feb 13 2017 Digital-Me Infra Team <infra@digital-me.nl> - 3.3.1-2
+* Mon Feb 13 2017 Infra Team <infra@dolden.net> - 3.3.1-2
 - Fix multiple vulnerabilities
 - Including 2 SQL injections: https://www.curesec.com/blog/article/blog/phplist-326-SQL-Injection-193.html)
 - More info: https://www.phplist.org/newslist/phplist-3-3-1-released-first-update-for-phplist-3-3/
 
-* Wed Jan  4 2017 Digital-Me Infra Team <infra@digital-me.nl> - 3.2.7-2
+* Wed Jan  4 2017 Infra Team <infra@dolden.net> - 3.2.7-2
 - Fix multiple vulnerabilities in PHPMailer (CVE-2016-10045, CVE-2016-10033)
 - More info: https://www.phplist.org/newslist/phplist-3-2-7-released-phpmailer-updated/
 
-* Tue Nov  8 2016 Digital-Me Infra Team <infra@digital-me.nl> - 3.2.6-2
+* Tue Nov  8 2016 Infra Team <infra@dolden.net> - 3.2.6-2
 - Fix XSS vulnerability (#18250)
 - More info: https://www.phplist.org/newslist/phplist-3-2-6-release-notes/
