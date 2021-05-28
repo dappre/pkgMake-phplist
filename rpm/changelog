@@ -1,3 +1,19 @@
+* Tue May 25 2021 Infra Team <infra@dolden.net> - 3.6.3-1
+- Security release and feature improvements
+- More info: https://www.phplist.org/newslist/phplist-3-6-3-release-notes/
+
+* Mon Mar 15 2021 Infra Team <infra@dolden.net> - 3.6.2-1
+- Text templates and new translations
+- More info: https://www.phplist.org/newslist/phplist-3-6-2-release-notes/
+
+* Fri Feb 12 2021 Infra Team <infra@dolden.net> - 3.6.1-1
+- Improvements for short URLs and PHP 8
+- More info: https://www.phplist.org/newslist/phplist-3-6-1-release-notes/
+
+* Mon Jan 11 2021 Infra Team <infra@dolden.net> - 3.6.0-1
+- Functionality enhancements
+- More info: https://www.phplist.org/newslist/phplist-3-6-0-release-notes/
+
 * Mon Dec 14 2020 Infra Team <infra@dolden.net> - 3.5.9-1
 - several feature and functionality enhancements
 - More info: https://www.phplist.org/newslist/phplist-3-5-9-release-notes/
