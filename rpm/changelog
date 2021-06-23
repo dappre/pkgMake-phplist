@@ -1,3 +1,50 @@
+* Mon Dec 14 2020 Infra Team <infra@dolden.net> - 3.5.9-1
+- several feature and functionality enhancements
+- More info: https://www.phplist.org/newslist/phplist-3-5-9-release-notes/
+
+* Wed Nov 11 2020 Infra Team <infra@dolden.net> - 3.5.8-1
+- three new features two out of which relate to the AJAX subscription form
+- two functionality enhancements
+- More info: https://www.phplist.org/newslist/phplist-3-5-8-release-notes/
+
+* Tue Oct 20 2020 Infra Team <infra@dolden.net> - 3.5.7-1
+- security enforcements on the authentication process
+- More info: https://www.phplist.org/newslist/phplist-3-5-7-release-notes/
+
+* Mon Aug 24 2020 Infra Team <infra@dolden.net> - 3.5.6-1
+- Reply-To header to for your campaigns
+- enhancements to campaign forwarding
+- improvements on how the updater handles plugin updates
+- 3 other changes
+- More info: https://www.phplist.org/newslist/phplist-3-5-6-release-notes/
+
+* Mon Jul 7 2020 Infra Team <infra@dolden.net> - 3.5.5-1
+- several security fixes
+- 5 other changes that fix other bugs, or help improve usability and functionality
+- More info: https://www.phplist.org/newslist/phplist-3-5-5-release-notes/
+
+* Thu May 28 2020 Infra Team <infra@dolden.net> - 3.5.4-1
+- several security fixes
+- beta version of preview option
+- More info: https://www.phplist.org/newslist/phplist-3-5-4-release-notes/
+
+* Wed Apr 22 2020 Infra Team <infra@dolden.net> - 3.5.3-1
+- Matomo Analytics Integration, PHPMailer update and  5 other changes
+- More info: https://www.phplist.org/newslist/phplist-3-5-3-release-notes/
+
+* Wed Mar 11 2020 Infra Team <infra@dolden.net> - 3.5.2-1
+- 3 fixes, 3 usability improvements and functionality enhancements
+- updated dependencies for phpList4 core module
+- More info: https://www.phplist.org/newslist/phplist-3-5-2-release-notes/
+
+* Wed Feb 12 2020 Infra Team <infra@dolden.net> - 3.5.1-1
+- security release
+- More info: https://www.phplist.org/newslist/phplist-3-5-1-release-notes/
+
+* Tue Jan 14 2020 Infra Team <infra@dolden.net> - 3.5.0-1
+- minor release with a few fixes and usability improvements
+- More info: https://www.phplist.org/newslist/phplist-3-5-0-release-notes/
+
 * Wed Dec 11 2019 Infra Team <infra@dolden.net> - 3.4.9-1
 - 3 fixes, 3 usability improvements and functionality enhancements and updated dependencies for phpList4 modules
 - More info: https://www.phplist.org/newslist/phplist-3-4-9-release-notes/
